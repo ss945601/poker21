@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "flame_test",
+            "request": "launch",
+            "type": "dart",
+            "program": "/Users/steven.chang/projects/flame_test/lib/main.dart"
+        },
+        {
+            "name": "flame_test (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flame_test (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
