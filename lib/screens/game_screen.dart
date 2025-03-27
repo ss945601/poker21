@@ -1,3 +1,4 @@
+import 'package:flame_test/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flame/game.dart';
@@ -13,6 +14,14 @@ class GameScreen extends StatelessWidget {
       create: (_) => PokerGameCubit(),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const MenuScreen()),
+              );
+            },
+          ),
           title: const Text('21 Poker Game'),
           backgroundColor: Colors.green[800],
         ),
