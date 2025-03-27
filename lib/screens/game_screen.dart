@@ -44,20 +44,26 @@ class GameScreen extends StatelessWidget {
                                       width: 70,
                                       height: 100,
                                       padding: const EdgeInsets.all(8),
-                                      child: Column(
+                                      child: Stack(
                                         children: [
-                                          Text(
-                                            card.suitSymbol,
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              color: card.color,
+                                          Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: Text(
+                                              card.suitSymbol,
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: card.color,
+                                              ),
                                             ),
                                           ),
-                                          Text(
-                                            card.rank.name.toUpperCase(),
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: card.color,
+                                          Center(
+                                            child: Text(
+                                              card.displayRank,
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: card.color,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -101,20 +107,26 @@ class GameScreen extends StatelessWidget {
                                 width: 70,
                                 height: 100,
                                 padding: const EdgeInsets.all(8),
-                                child: Column(
+                                child: Stack(
                                   children: [
-                                    Text(
-                                      card.suitSymbol,
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        color: card.color,
+                                    Positioned(
+                                      top: 0,
+                                      left: 0,
+                                      child: Text(
+                                        card.suitSymbol,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: card.color,
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                      card.rank.name.toUpperCase(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: card.color,
+                                    Center(
+                                      child: Text(
+                                        card.displayRank,
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: card.color,
+                                        ),
                                       ),
                                     ),
                                   ],

@@ -46,6 +46,21 @@ class PlayingCard {
         : Colors.black;
   }
 
+  String get displayRank {
+    switch (rank) {
+      case Rank.ace:
+        return 'A';
+      case Rank.jack:
+        return 'J';
+      case Rank.queen:
+        return 'Q';
+      case Rank.king:
+        return 'K';
+      default:
+        return (rank.index + 1).toString();
+    }
+  }
+
   @override
   String toString() {
     return '${rank.name} of ${suit.name}';
