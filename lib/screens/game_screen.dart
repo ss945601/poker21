@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flame/game.dart';
-import '../game/poker_game.dart';
+import '../game/poker_game_cubit.dart';
+import '../game/poker_game_state.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => PokerGame(),
+    return BlocProvider(
+      create: (_) => PokerGameCubit(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('21 Poker Game'),
           backgroundColor: Colors.green[800],
         ),
-        body: Consumer<PokerGame>(
-          builder: (context, game, child) {
+        body: BlocBuilder<PokerGameCubit, PokerGameState>(
+          builder: (context, state) {
             return Column(
               children: [
                 // Dealer's cards
@@ -27,7 +28,7 @@ class GameScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Dealer\'s Hand (${game.dealerScore})',
+                          'Dealer\'s Hand (${state.dealerScore})',
                           style: const TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -36,7 +37,7 @@ class GameScreen extends StatelessWidget {
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: game.dealerHand.map((card) {
+                          children: state.dealerHand.map((card) {
                             return Card(
                               color: card.isFaceUp ? Colors.white : Colors.blue,
                               child: card.isFaceUp
@@ -91,7 +92,7 @@ class GameScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Your Hand (${game.playerScore})',
+                          'Your Hand (${state.playerScore})',
                           style: const TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -100,7 +101,7 @@ class GameScreen extends StatelessWidget {
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: game.playerHand.map((card) {
+                          children: state.playerHand.map((card) {
                             return Card(
                               color: Colors.white,
                               child: Container(
@@ -146,29 +147,28 @@ class GameScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      if (game.currentState == GameState.betting)
+                      if (state.currentState == GameState.betting)
                         ElevatedButton(
                           onPressed: () {
-                            game.startNewGame();
-                            game.currentState = GameState.playerTurn;
+                            context.read<PokerGameCubit>().startNewGame();
                           },
                           child: const Text('Deal'),
                         ),
-                      if (game.currentState == GameState.playerTurn) ...[                        
+                      if (state.currentState == GameState.playerTurn) ...[                        
                         ElevatedButton(
-                          onPressed: () => game.playerHit(),
+                          onPressed: () => context.read<PokerGameCubit>().playerHit(),
                           child: const Text('Hit'),
                         ),
                         ElevatedButton(
-                          onPressed: () => game.playerStand(),
+                          onPressed: () => context.read<PokerGameCubit>().playerStand(),
                           child: const Text('Stand'),
                         ),
                       ],
-                      if (game.currentState == GameState.gameOver)
+                      if (state.currentState == GameState.gameOver)
                         Column(
                           children: [
                             Text(
-                              game.getGameResult(),
+                              state.gameResult!,
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -176,8 +176,7 @@ class GameScreen extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                game.startNewGame();
-                                game.currentState = GameState.playerTurn;
+                                context.read<PokerGameCubit>().startNewGame();
                               },
                               child: const Text('Play Again'),
                             ),
